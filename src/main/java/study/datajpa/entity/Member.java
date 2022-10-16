@@ -24,6 +24,11 @@ public class Member {
     private Team team;
 
 
+    public Member(String username, int age) {
+        this.username = username;
+        this.age = age;
+    }
+
     public Member(String username) {
         this.username = username;
     }
@@ -31,7 +36,7 @@ public class Member {
     public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
-        if(team != null) {
+        if (team != null) {
             changeTeam(team);
         }
     }
