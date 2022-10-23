@@ -1,5 +1,6 @@
 package study.datajpa.repository;
 
+import org.h2.engine.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +15,7 @@ import study.datajpa.entity.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -244,4 +246,27 @@ class MemberRepositoryTest {
             System.out.println("member = " + member.getUsername());
         }
     }
+
+    @Test
+    public void callCustom() {
+        List<Member> result = memberRepository.findMemberCustom();
+    }
+
+    @Test
+    public void projections() {
+
+        Member member = new Member("m1");
+        em.persist(member);
+
+        Team team = new Team("teamA");
+        team.setMembers(Arrays.asList(member));
+        em.persist(team);
+
+
+        em.clear();
+
+        List<NestedClosedProjections> result = memberRepository.findProjectionsByUsername("m1", NestedClosedProjections.class);
+    }
+
+
 }
